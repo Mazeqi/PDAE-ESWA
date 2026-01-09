@@ -1,0 +1,63 @@
+# CAE backbone
+network:
+  # [from, number, module, args]
+  [
+    #encoder
+    [-1, 1, Conv2d, [16, 4, 2, 1]],
+    [-1, 1, BatchNorm2d, [16]],
+    [-1, 1, LeakyReLU, [True]],
+
+    [-1, 1, Conv2d, [32, 4, 2, 1]],
+    [-1, 1, BatchNorm2d, [32]],
+    [-1, 1, LeakyReLU, [True]],
+
+    [-1, 1, Conv2d, [64, 4, 2, 1]],
+    [-1, 1, BatchNorm2d, [64]],
+    [-1, 1, LeakyReLU, [True]],
+
+    [-1, 1, Conv2d, [128, 4, 2, 1]],
+    [-1, 1, BatchNorm2d, [128]],
+    [-1, 1, LeakyReLU, [True]],
+
+    [-1, 1, Conv2d, [256, 4, 2, 1]],
+    [-1, 1, BatchNorm2d, [256]],
+    [-1, 1, LeakyReLU, [True]],
+
+    [-1, 1, Conv2d, [512, 4, 2, 1]],
+    [-1, 1, BatchNorm2d, [512]],
+    [-1, 1, LeakyReLU, [True]],
+
+    [-1, 1, Conv2d, [100, 4, 1, 0, 1, 1, False]],
+
+    #decoder
+    [-1, 1, ConvTranspose2d, [512, 4, 1, 0]],
+    [-1, 1, BatchNorm2d, [512]],
+    [-1, 1, LeakyReLU, [True]],
+
+    [-1, 1, ConvTranspose2d, [256, 4, 2, 1]],
+    [-1, 1, BatchNorm2d, [256]],
+    [-1, 1, LeakyReLU, [True]],
+
+    [-1, 1, ConvTranspose2d, [128, 4, 2, 1]],
+    [-1, 1, BatchNorm2d, [128]],
+    [-1, 1, LeakyReLU, [True]],
+
+
+    [-1, 1, ConvTranspose2d, [64, 4, 2, 1]],
+    [-1, 1, BatchNorm2d, [64]],
+    [-1, 1, LeakyReLU, [True]],
+
+
+    [-1, 1, ConvTranspose2d, [32, 4, 2, 1]],
+    [-1, 1, BatchNorm2d, [32]],
+    [-1, 1, LeakyReLU, [True]],
+
+    [-1, 1, ConvTranspose2d, [16, 4, 2, 1]],
+    [-1, 1, BatchNorm2d, [16]],
+    [-1, 1, LeakyReLU, [True]],
+
+    [-1, 1, ConvTranspose2d, [3, 4, 2, 1]],
+    [-1, 1, Tanh, []],
+
+    #[-1, 1, ReShape, [[3, 256, 256]]]
+  ]

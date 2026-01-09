@@ -1,0 +1,153 @@
+{
+    "trainer_para":{
+        "seed":88,
+        "data_path":"/home/tanpengjie1/Mazeqi/dataset/mvtec_loco_anomaly_detection/",
+        "dataset_name":"mvtec_loco",
+        "train_class_mode":"all_class",
+        "class_list":["breakfast_box","juice_bottle","pushpins","screw_bag","splicing_connectors"],
+        "class_name":"screw_bag",
+        "logger":{
+            "epoch_test":true
+        },
+        "backbone_2":{
+            "backbone_name":"cait",
+            "mode":true,
+            "concat":{
+                "mode":"dc",
+                "order":["b1", "b1", "b2", "b1"]
+            },
+            "layers":["blocks.15"],
+            "tr_net":["cait", "cait_xs24_384", "cait_xxs36_384"]
+        },
+
+        "backbone_1":{
+            "backbone_name":"densenet201",
+            "mode":true,
+            "layers":["features.denseblock1", "features.denseblock2"],
+            "tr_net":[]
+        },
+        "fusion_mbb":{
+            "fusion_size":3,
+            "mode":true
+        },
+        "blur":{
+            "aug":true,
+            "ori":true
+        },
+        "train_mode":"ov_train",
+        "patch_reduce_dim":512,
+        "patch_score_lr":0.3,
+        "patch_score_size":5,
+        "loss_contrastive_beta":10,
+        "score_method":"patch_dis",
+        "save_test_image":false,
+        "device":"cuda:0",
+        "net_name":"mv_CAE_Tconv_Simple",
+        "outdir_final_index_name":"den12_cait15_rand_mask_cos10",
+        "n_epochs":160,
+        "layer_size":0,
+        "model_test_load_only_values":false,
+        "image_size":384,
+        "optimizer_name":"adam",
+        "scheduler_name":"MultiStepLR",
+        "loss_name":"mse",
+        "contrastive_loss":"contras",
+        "aug_model_out_layers":[],
+        "ori_ly_model_out_layers":[0, 1, 2, 3]
+    },
+    "optim_para":{
+        "aug_view":{
+            "sgd":{
+                "lr":0.1,
+                "momentum":0.9,
+                "weight_decay":1e-6
+            },
+            "adam":{
+                "lr":1e-3,
+                "weight_decay":1e-5
+            },
+            "adamw":{
+                "lr":4e-4,  
+                "weight_decay":0.0001         
+            }
+        }
+        
+    },
+    "dataset_para":{
+        "aug_mode":true,
+        "cutpaste":{
+            "mode":false,
+            "cutpaste_noise":{
+                "mvtec":[0.8, 0.6, 0.5, 0.5],
+                "btad":[0.8, 0.6, 0.5, 0.5],
+                "mvtec_loco":[0.8, 0.6, 0.5, 0.5]
+            }
+            
+        },
+        "cutpaste_ori":{
+            "mode":true,
+            "type":"binary"
+        },
+        "defect_maker":{
+            "mode":false
+        },
+        "rand_mask":{
+            "mode":false,
+            "mask_ratio":0.3
+        }
+       
+    },
+    "dataloader_para":{
+        "batch_size":4,
+        "num_workers":4
+    },
+    "network_init_para":{
+        "init_weight":{
+            "init_type":"normal",
+            "init_gain":0.02
+        }
+    },
+    "scheduler_para":{
+        "ExponentialLR":{
+            "gamma":0.9
+        },
+
+        "MultiStepLR":{
+            "milestones":[50, 80, 110, 140],
+            "gamma":0.8,
+            "verbose":true
+        },
+        "step":{
+            "step_size":100,
+            "gamma":0.1,
+            "verbose":true
+        },
+
+        "plateau":{
+            "mode":"min",
+            "factor":0.1,
+            "threshold":1e-5,
+            "eps":1e-5,
+            "patience":6,
+            "verbose":true
+        },
+
+        "cosine":{
+            "T_max":150,
+            "eta_min":0
+        },
+
+        "linear":{
+            "linear_para":{
+
+            },
+            "inside_fun":{
+                "epoch_count":180,
+                "n_epochs_decay":200
+            }
+        }
+        
+    }
+    
+}
+    
